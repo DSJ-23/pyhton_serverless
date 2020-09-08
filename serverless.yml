@@ -1,12 +1,32 @@
-
-
 service: eg
 
 provider:
   name: aws
-  runtime: python3.7
+  runtime: python3.8
 
 
 functions:
   hello:
     handler: handler.hello
+    events:
+    - http:
+        path: /hello
+        method: get
+  post:
+    handler: handler.post
+    events:
+    - http:
+        path: /hello
+        method: post
+  test1:
+    handler: handler.test1
+    events:
+    - http:
+        path: /test
+        method: post
+  test2:
+    handler: extra.test2
+    events:
+    - http:
+        path: /test2
+        method: post

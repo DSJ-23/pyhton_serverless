@@ -1,5 +1,14 @@
 import json
 
+def get_response(status, body, dump=False):
+    if dump == False:
+        return {"statusCode": status, "body": body}
+    else:
+        return {"statusCode": status, "body": json.dumps(body)}
+
+def response_dump(status, body):
+    return {"statusCode": status, "body": json.dumps(body)}
+    
 
 def hello(event, context):
     body = {
@@ -13,4 +22,19 @@ def hello(event, context):
     }
 
     return response
+
+
+def post(event, callback):
+    return get_response(200, json.loads(event['body']))
+
+
+def test1(event, callback):
+    if 'worked' in event:
+        print(event)
+        return get_response(200, event)
+    else:
+        print(event)
+        data = json.loads(event['body'])
+        return response_dump(200, {"body":data})
+    
 
