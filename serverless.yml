@@ -1,8 +1,25 @@
 service: eg
 
+custom:
+  settings:
+    POSTS_TABLE: posts
+
 provider:
   name: aws
   runtime: python3.8
+  environment: ${self:custom.settings}
+  region: us-east-1
+  iamRoleStatements:
+   - Effect: "Allow"
+     Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+     Resource:
+      - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.POSTS_TABLE}"
 
 
 functions:
@@ -30,3 +47,18 @@ functions:
     - http:
         path: /test2
         method: post
+  get:
+    handler: get.get
+    events:
+    - http:
+        path: /get
+        method: get
+  get_single:
+    handler: get.get_single
+    events:
+    - http:
+        path: /get/{id}
+        method: get
+
+
+
