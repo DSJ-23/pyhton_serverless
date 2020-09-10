@@ -35,6 +35,6 @@ def test1(event, callback):
     else:
         print(event)
         data = json.loads(event['body'])
-        return response_dump(200, {"body":data})
+        return response_dump(200, data)
     
 
