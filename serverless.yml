@@ -20,6 +20,8 @@ provider:
         - dynamodb:DeleteItem
      Resource:
       - "arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.POSTS_TABLE}"
+  apiKeys:
+    - Delete_All
 
 
 functions:
@@ -71,6 +73,14 @@ functions:
     - http:
         path: /post
         method: post
+  delete_content:
+    handler: delete.delete_content
+    events:
+    - http:
+        path: /delete
+        method: delete
+        private: true
+
 
 
 
