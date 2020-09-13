@@ -59,6 +59,18 @@ functions:
     - http:
         path: /get/{id}
         method: get
+  delete_single:
+    handler: delete.delete_single
+    events:
+    - http:
+        path: /delete/{id}
+        method: delete
+  new_post:
+    handler: post.create
+    events:
+    - http:
+        path: /post
+        method: post
 
 
 
